@@ -1,9 +1,27 @@
+#include "SearchEngine.h"
+
 #include <iostream>
 
-int main(){
+using namespace std;
 
-  std::cout << "Mini Search Engine\n";
+int main()
+{
+  SearchEngine engine;
+
+  engine.buildIndex("../docs");
+
+  auto results = engine.search("apple");
+
+  cout << "Search Results:\n";
+
+  for(const auto& result : results)
+  {
+    cout
+        << result.first
+        << " ("
+        << result.second
+        << ")\n";
+  }
 
   return 0;
-  
 }
