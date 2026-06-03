@@ -8,7 +8,7 @@ int main()
 {
   SearchEngine engine;
 
-  engine.buildIndex("../docs");
+  engine.buildIndex("docs");
 
   auto results = engine.search("apple");
 
