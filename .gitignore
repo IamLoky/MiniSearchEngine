@@ -1,0 +1,13 @@
+# Build files
+*.o
+*.obj
+*.exe
+*.out
+
+# IDE settings
+.vscode/
+.idea/
+
+# Build folders
+build/
+bin/
