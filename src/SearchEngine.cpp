@@ -33,3 +33,58 @@ string cleanWord(string word)
 
     return result;
 }
+
+void SearchEngine::buildIndex(const string& folderPath)
+{
+    for(const auto& entry : fs::directory_iterator(folderPath))
+    {
+        if(!entry.is_regular_file())
+        {
+            continue;
+        }
+
+        string fileName = entry.path().filename().string();
+        
+        ifstream file(entry.path());
+
+        if(!file.is_open())
+        {
+            continue;
+        }
+
+        string word;
+
+        while(file >> word)
+        {
+            word = cleanWord(word);
+
+            if(word.empty())
+            {
+                continue;
+            }
+            index[word][fileName]++;
+        }
+    }
+}
+
+vector<pair<string, int>>
+SearchEngine::search(const string& word)
+{
+    vector<pair<string, int>> results;
+
+    string query = cleanWord(word);
+
+    auto it = index.find(query);
+
+    if(it == index.end())
+    {
+        return results;
+    }
+
+    for(const auto& document : it->second)
+    {
+        results.push_back(document);
+    }
+
+    return results;
+}
