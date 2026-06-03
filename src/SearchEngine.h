@@ -1,9 +1,23 @@
-#ifndef SEARCHENGINE_H
-#define SEARCHENGINE_H
+#ifndef SEARCH_ENGINE_H
+#define SEARCH_ENGINE_H
 
-class SearchEngine {
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+class SearchEngine
+{
+private:
+    std::unordered_map<
+        std::string,
+        std::unordered_map<std::string, int>
+    > index;
+
 public:
-    void search();
+    void buildIndex(const std::string& folderPath);
+
+    std::vector<std::pair<std::string, int>>
+    search(const std::string& word);
 };
 
 #endif
