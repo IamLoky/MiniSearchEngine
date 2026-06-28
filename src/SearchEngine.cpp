@@ -86,5 +86,14 @@ SearchEngine::search(const string& word)
         results.push_back(document);
     }
 
+    sort(
+        results.begin(),
+        results.end(),
+        [](const auto& a, const auto& b)
+        {
+            return a.second > b.second;
+        }
+    );
+
     return results;
 }
