@@ -10,7 +10,7 @@ int main()
 
   engine.buildIndex("docs");
 
-  auto results = engine.search("apple");
+  auto results = engine.search("the");
 
   cout << "Search Results:\n";
 
