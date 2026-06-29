@@ -62,6 +62,12 @@ void SearchEngine::buildIndex(const string& folderPath)
             {
                 continue;
             }
+
+            if(stopWords.find(word) != stopWords.end())
+            {
+                continue;
+            }
+            
             index[word][fileName]++;
         }
     }
