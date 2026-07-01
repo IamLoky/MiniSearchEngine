@@ -39,7 +39,7 @@ public:
     void buildIndex(const std::string& folderPath);
 
     std::vector<std::pair<std::string, int>>
-    search(const std::string& word);
+    search(const std::string& query);
 };
 
 #endif
