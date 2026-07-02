@@ -5,10 +5,13 @@
 #include <unordered_map>
 #include <vector>
 #include <unordered_set>
+#include "TextProcessor.h"
 
 class SearchEngine
 {
 private:
+    TextProcessor processor;
+
     std::unordered_map<
         std::string,
         std::unordered_map<std::string, int>
