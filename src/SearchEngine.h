@@ -12,15 +12,18 @@ struct Posting
     int frequency = 0;
 };
 
+using PostingList =
+    std::unordered_map<std::string, Posting>;
+
+using InvertedIndex =
+    std::unordered_map<std::string, PostingList>;
+
 class SearchEngine
 {
 private:
     TextProcessor processor;
 
-    std::unordered_map<
-        std::string,
-        std::unordered_map<std::string, Posting>
-    > index;
+    InvertedIndex index;
 
     std::unordered_set<std::string> stopWords =
     {
