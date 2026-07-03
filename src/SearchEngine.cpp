@@ -58,7 +58,11 @@ SearchEngine::search(const string& word)
 
     for(const auto& document : it->second)
     {
-        results.push_back(document);
+        results.push_back(
+        {
+            document.first,
+            document.second.frequency
+        });
     }
 
     sort(
