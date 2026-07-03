@@ -9,31 +9,6 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-string normalizeWord(string word)
-{
-    for(char& ch : word)
-    {
-        ch = tolower(static_cast<unsigned char>(ch));
-    }
-
-    return word;
-}
-
-string cleanWord(string word)
-{
-    string result;
-
-    for(char ch : word)
-    {
-        if(isalnum(static_cast<unsigned char>(ch)))
-        {  
-            result += tolower(ch);
-        }
-    }
-
-    return result;
-}
-
 void SearchEngine::buildIndex(const string& folderPath)
 {
     for(const auto& entry : fs::directory_iterator(folderPath))
@@ -52,23 +27,17 @@ void SearchEngine::buildIndex(const string& folderPath)
             continue;
         }
 
-        string word;
+        string line;
 
-        while(file >> word)
+        while(getline(file, line))
         {
-            word = cleanWord(word);
+            vector<string> words =
+                processor.tokenize(line);
 
-            if(word.empty())
+            for(const string& word : words)
             {
-                continue;
+                index[word][fileName]++;
             }
-
-            if(stopWords.find(word) != stopWords.end())
-            {
-                continue;
-            }
-            
-            index[word][fileName]++;
         }
     }
 }
@@ -78,7 +47,7 @@ SearchEngine::search(const string& word)
 {
     vector<pair<string, int>> results;
 
-    string query = cleanWord(word);
+    string query = processor.cleanWord(word);
 
     auto it = index.find(query);
 
