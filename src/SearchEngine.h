@@ -7,6 +7,11 @@
 #include <unordered_set>
 #include "TextProcessor.h"
 
+struct Posting
+{
+    int frequency = 0;
+};
+
 class SearchEngine
 {
 private:
@@ -14,7 +19,7 @@ private:
 
     std::unordered_map<
         std::string,
-        std::unordered_map<std::string, int>
+        std::unordered_map<std::string, Posting>
     > index;
 
     std::unordered_set<std::string> stopWords =
