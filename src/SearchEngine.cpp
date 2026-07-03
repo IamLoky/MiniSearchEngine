@@ -36,7 +36,7 @@ void SearchEngine::buildIndex(const string& folderPath)
 
             for(const string& word : words)
             {
-                index[word][fileName]++;
+                index[word][fileName].frequency++;
             }
         }
     }
