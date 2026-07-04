@@ -42,10 +42,10 @@ void SearchEngine::buildIndex(const string& folderPath)
     }
 }
 
-vector<pair<string, int>>
+vector<SearchResult>
 SearchEngine::search(const string& word)
 {
-    vector<pair<string, int>> results;
+    vector<SearchResult> results;
 
     string query = processor.cleanWord(word);
 
@@ -70,7 +70,7 @@ SearchEngine::search(const string& word)
         results.end(),
         [](const auto& a, const auto& b)
         {
-            return a.second > b.second;
+            return a.score > b.score;
         }
     );
 
