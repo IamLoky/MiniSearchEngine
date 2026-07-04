@@ -4,7 +4,6 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <unordered_set>
 #include "TextProcessor.h"
 
 struct Posting
