@@ -17,9 +17,9 @@ int main()
   for(const auto& result : results)
   {
     cout
-        << result.first
+        << result.documentName
         << " ("
-        << result.second
+        << result.score
         << ")\n";
   }
 
