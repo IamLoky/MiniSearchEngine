@@ -16,6 +16,7 @@ struct SearchResult
 {
     std::string documentName;
     int score = 0;
+};
 
 using PostingList =
     std::unordered_map<std::string, Posting>;
@@ -29,27 +30,6 @@ private:
     TextProcessor processor;
 
     InvertedIndex index;
-
-    std::unordered_set<std::string> stopWords =
-    {
-        "a",
-        "an",
-        "the",
-        "is",
-        "are",
-        "was",
-        "were",
-        "of",
-        "to",
-        "for",
-        "on",
-        "in",
-        "at",
-        "by",
-        "with",
-        "and",
-        "or"
-    };
 
 public:
     void buildIndex(const std::string& folderPath);
