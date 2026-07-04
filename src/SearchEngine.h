@@ -54,7 +54,7 @@ private:
 public:
     void buildIndex(const std::string& folderPath);
 
-    std::vector<std::pair<std::string, int>>
+    std::vector<SearchResult>
     search(const std::string& query);
 };
 
