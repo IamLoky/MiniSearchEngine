@@ -43,7 +43,7 @@ void SearchEngine::buildIndex(const string& folderPath)
 }
 
 vector<SearchResult>
-SearchEngine::search(const string& word)
+SearchEngine::search(const string& query)
 {
     vector<SearchResult> results;
 
