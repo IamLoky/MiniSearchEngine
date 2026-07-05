@@ -47,7 +47,12 @@ SearchEngine::search(const string& word)
 {
     vector<SearchResult> results;
 
-    string query = processor.cleanWord(word);
+    vector<string> terms = processor.tokenize(query);
+
+    if(terms.empty())
+    {
+        return {};
+    }
 
     auto it = index.find(query);
 
