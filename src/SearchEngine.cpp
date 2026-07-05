@@ -54,30 +54,20 @@ SearchEngine::search(const string& query)
         return {};
     }
 
-    auto it = index.find(query);
+    const string& firstTerm = terms[0];
+
+    auto it = index.find(firstTerm);
 
     if(it == index.end())
     {
-        return results;
+        return {};
     }
 
-    for(const auto& document : it->second)
+    unordered_map<string, int> currentResults;
+
+    for (const auto& document : it->second)
     {
-        results.push_back(
-        {
-            document.first,
-            document.second.frequency
-        });
+       currentResults[document.first] =
+           document.second.frequency;
     }
-
-    sort(
-        results.begin(),
-        results.end(),
-        [](const auto& a, const auto& b)
-        {
-            return a.score > b.score;
-        }
-    );
-
-    return results;
 }
