@@ -70,4 +70,52 @@ SearchEngine::search(const string& query)
        currentResults[document.first] =
            document.second.frequency;
     }
+
+    for (size_t i = 1; i < terms.size(); i++)
+    {
+        auto postingIt = index.find(terms[i]);
+
+        if (postingIt == index.end())
+        {
+            return {};
+        }
+
+        auto current = currentResults.begin();
+
+        while (current != currentResults.end())
+        {
+            auto posting = postingIt->second.find(current->first);
+
+            if (posting == postingIt->second.end())
+            {
+                current = currentResults.erase(current);
+            }
+            else
+            {
+                current->second += posting->second.frequency;
+                ++current;
+            }
+        }
+    }
+
+    for (const auto& document : currentResults)
+    {
+        results.push_back(
+        {
+            document.first,
+            document.second
+        });
+    }
+
+    sort(
+        results.begin(),
+        results.end(),
+        [](const SearchResult& a,
+           const SearchResult& b)
+        {
+            return a.score > b.score;
+        }
+    );
+
+    return results;
 }
