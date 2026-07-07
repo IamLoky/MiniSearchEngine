@@ -30,6 +30,8 @@ private:
 
     InvertedIndex index;
 
+    size_t totalDocuments = 0;
+
 public:
     void buildIndex(const std::string& folderPath);
 
