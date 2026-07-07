@@ -27,6 +27,8 @@ void SearchEngine::buildIndex(const string& folderPath)
             continue;
         }
 
+        totalDocuments++;
+
         string line;
 
         while(getline(file, line))
