@@ -5,23 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "TextProcessor.h"
-
-struct Posting
-{
-    int frequency = 0;
-};
-
-struct SearchResult
-{
-    std::string documentName;
-    int score = 0;
-};
-
-using PostingList =
-    std::unordered_map<std::string, Posting>;
-
-using InvertedIndex =
-    std::unordered_map<std::string, PostingList>;
+#include "Types.h"
 
 class SearchEngine
 {
