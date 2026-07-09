@@ -21,6 +21,10 @@ public:
 
     std::vector<SearchResult>
     search(const std::string& query);
+
+    const InvertedIndex& getIndex() const;
+
+    size_t getTotalDocuments() const;
 };
 
 #endif
