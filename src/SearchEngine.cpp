@@ -44,6 +44,18 @@ void SearchEngine::buildIndex(const string& folderPath)
     }
 }
 
+const InvertedIndex&
+SearchEngine::getIndex() const
+{
+    return index;
+}
+
+size_t
+SearchEngine::getTotalDocuments() const
+{
+    return totalDocuments;
+}
+
 vector<SearchResult>
 SearchEngine::search(const string& query)
 {
