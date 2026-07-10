@@ -3,10 +3,13 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 struct Posting
 {
    int frequency = 0;
+
+   std::vector<int> positions;
 };
 
 struct SearchResult
