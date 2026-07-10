@@ -2,11 +2,20 @@
 #define QUERY_PROCESSOR_H
 
 #include "Types.h"
+#include "TextProcessor.h"
 
 class QueryProcessor
 {
-public:
+private:
+    const InvertedIndex& index;
+    size_t totalDocuments;
+    TextProcessor processor;
 
+public:
+    QueryProcessor(
+        const InvertedIndex& index,
+        size_t totalDocuments
+    );
 };
 
 #endif
