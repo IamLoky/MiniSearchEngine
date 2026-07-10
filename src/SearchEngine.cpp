@@ -29,6 +29,8 @@ void SearchEngine::buildIndex(const string& folderPath)
 
         totalDocuments++;
 
+        int position = 0;
+
         string line;
 
         while(getline(file, line))
@@ -38,7 +40,14 @@ void SearchEngine::buildIndex(const string& folderPath)
 
             for(const string& word : words)
             {
-                index[word][fileName].frequency++;
+                Posting& posting =
+                    index[word][fileName];
+
+                posting.frequency++;
+
+                posting.positions.push_back(position);
+
+                position++;
             }
         }
     }
