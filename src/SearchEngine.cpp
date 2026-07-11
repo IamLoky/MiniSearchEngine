@@ -70,6 +70,15 @@ SearchEngine::search(const string& query)
 {
     vector<SearchResult> results;
 
+    if (query.size() >= 2 &&
+        query.front() == '"' &&
+        query.back() == '"')
+    {
+        return searchPhrase(
+            query.substr(1, query.size() - 2)
+        );
+    }
+
     vector<string> terms = processor.tokenize(query);
 
     if(terms.empty())
