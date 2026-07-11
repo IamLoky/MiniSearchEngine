@@ -159,54 +159,76 @@ SearchEngine::searchPhrase(const string& phrase)
 
     vector<string> terms = processor.tokenize(phrase);
 
-    if (terms.size() != 2)
+    if (terms.empty())
     {
         return results;
     }
 
-    auto firstIt = index.find(terms[0]);
-    auto secondIt = index.find(terms[1]);
+    auto firstPosting = index.find(terms[0]);
 
-    if (firstIt == index.end() || secondIt == index.end())
+    if(firstPosting == index.end())
     {
         return results;
     }
 
-    for (const auto& doc : firstIt->second)
+    for(const auto& document : firstPosting->second)
     {
-        auto secondDoc = secondIt->second.find(doc.first);
+        const string& fileName = document.first;
 
-        if (secondDoc == secondIt->second.end())
+        bool phraseFound = false;
+
+        for(int startPos : document.second.positions)
         {
-            continue;
-        }
+            bool matches = true;
 
-        const vector<int>& pos1 = doc.second.positions;
-        const vector<int>& pos2 = secondDoc->second.positions;
-
-        size_t i = 0;
-        size_t j = 0;
-
-        while (i < pos1.size() && j < pos2.size())
-        {
-            if (pos2[j] == pos1[i] + 1)
+            for(size_t i = 1; i < terms.size(); i++)
             {
-                results.push_back(
-                {
-                    doc.first,
-                    1.0
-                });
+                auto postingIt = index.find(terms[i]);
 
+                if(postingIt == index.end())
+                {
+                    matches = false;
+                    break;
+                }
+
+                auto docIt =
+                    postingIt->second.find(fileName);
+
+                if(docIt == postingIt->second.end())
+                {
+                    matches = false;
+                    break;
+                }
+
+                const vector<int>& positions =
+                    docIt->second.positions;
+
+                if(find(
+                        positions.begin(),
+                        positions.end(),
+                        startPos + static_cast<int>(i))
+                    == positions.end())
+                {
+                    matches = false;
+                    break;
+                }
+            }
+
+            if(matches)
+            {
+                phraseFound = true;
                 break;
             }
-            else if (pos2[j] < pos1[i] + 1)
+        }
+
+        if(phraseFound)
+        {
+            results.push_back(
             {
-                j++;
-            }
-            else
-            {
-                i++;
-            }
+                fileName,
+                static_cast<double>(
+                    document.second.frequency)
+            });
         }
     }
 
