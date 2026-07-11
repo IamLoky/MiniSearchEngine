@@ -96,12 +96,22 @@ SearchEngine::search(const string& query)
         return {};
     }
 
-    unordered_map<string, int> currentResults;
+    unordered_map<string, double> currentResults;
+
+    double df =
+        static_cast<double>(it->second.size());
+
+    double idf =
+        log(
+            static_cast<double>(totalDocuments + 1) / (df + 1)
+        );
 
     for (const auto& document : it->second)
     {
-       currentResults[document.first] =
-           document.second.frequency;
+        double tf = document.second.frequency;
+
+        currentResults[document.first] =
+            tf * idf;
     }
 
     for (size_t i = 1; i < terms.size(); i++)
@@ -125,7 +135,18 @@ SearchEngine::search(const string& query)
             }
             else
             {
-                current->second += posting->second.frequency;
+                double df =
+                    static_cast<double>(postingIt->second.size());
+
+                double idf =
+                    log(
+                        static_cast<double>(total Documents + 1) / (df + 1)
+                    );
+
+                double tf =
+                    posting->second.frequency;
+
+                current->second += tf * idf;
                 ++current;
             }
         }
