@@ -151,3 +151,64 @@ SearchEngine::search(const string& query)
 
     return results;
 }
+
+vector<SearchResult>
+SearchEngine::searchPhrase(const string& phrase)
+{
+    vector<SearchResult> results;
+
+    vector<string> terms = processor.tokenize(phrase);
+
+    if (terms.size() != 2)
+    {
+        return results;
+    }
+
+    auto firstIt = index.find(terms[0]);
+    auto secondIt = index.find(terms[1]);
+
+    if (firstIt == index.end() || secondIt == index.end())
+    {
+        return results;
+    }
+
+    for (const auto& doc : firstIt->second)
+    {
+        auto secondDoc = secondIt->second.find(doc.first);
+
+        if (secondDoc == secondIt->second.end())
+        {
+            continue;
+        }
+
+        const vector<int>& pos1 = doc.second.positions;
+        const vector<int>& pos2 = secondDoc->second.positions;
+
+        size_t i = 0;
+        size_t j = 0;
+
+        while (i < pos1.size() && j < pos2.size())
+        {
+            if (pos2[j] == pos1[i] + 1)
+            {
+                results.push_back(
+                {
+                    doc.first,
+                    1.0
+                });
+
+                break;
+            }
+            else if (pos2[j] < pos1[i] + 1)
+            {
+                j++;
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+
+    return results;
+}
