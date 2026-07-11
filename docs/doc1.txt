@@ -1,1 +1,1 @@
-apple banana orange
+cat apple banana apple orange
