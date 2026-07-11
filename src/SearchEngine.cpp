@@ -5,6 +5,7 @@
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+#include <cmath>
 
 using namespace std;
 namespace fs = std::filesystem;
