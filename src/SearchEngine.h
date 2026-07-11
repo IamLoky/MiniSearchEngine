@@ -16,6 +16,9 @@ private:
 
     size_t totalDocuments = 0;
 
+    std::vector<SearchResult>
+    searchPhrase(const std::string& phrase);
+
 public:
     void buildIndex(const std::string& folderPath);
 
