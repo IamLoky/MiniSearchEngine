@@ -11,6 +11,18 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+static void writeString(std::ofstream& out,
+                        const std::string& str)
+{
+    size_t length = str.size();
+
+    out.write(
+        reinterpret_cast<const char*>(&length),
+        sizeof(length));
+
+    out.write(str.data(), length);
+}
+
 void SearchEngine::buildIndex(const string& folderPath)
 {
     for(const auto& entry : fs::directory_iterator(folderPath))
@@ -264,7 +276,34 @@ SearchEngine::searchPhrase(const string& phrase)
 
 void SearchEngine::saveIndex(const string& filename) const
 {
+    ofstream out(filename, ios::binary);
 
+    if(!out)
+    {
+        throw runtime_error(
+            "Could not open file for writing.");
+    }
+
+    const string magic = "MSE1";
+
+    writeString(out, magic);
+
+    int version = 1;
+
+    out.write(
+        reinterpret_cast<char*>(&version),
+        sizeof(version));
+
+    out.write(
+        reinterpret_cast<const char*>(
+            &totalDocuments),
+        sizeof(totalDocuments));
+
+    size_t totalWords = index.size();
+
+    out.write(
+        reinterpret_cast<char*>(&totalWords),
+        sizeof(totalWords));
 }
 
 void SearchEngine::loadIndex(const string& filename)
