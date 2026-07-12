@@ -10,6 +10,10 @@ int main()
 
   engine.buildIndex("docs");
 
+  engine.saveIndex("index.bin");
+
+  cout << "Index saved successfully.\n";
+
   string query;
 
   cout << "Enter search query: ";
