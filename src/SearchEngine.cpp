@@ -284,11 +284,11 @@ void SearchEngine::saveIndex(const string& filename) const
             "Could not open file for writing.");
     }
 
-    const string magic = "MSE1";
+    constexpr char MAGIC[] = "MSE1";
 
     writeString(out, magic);
 
-    int version = 1;
+    constexpr int INDEX_VERSION = 1;
 
     out.write(
         reinterpret_cast<char*>(&version),
