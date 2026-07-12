@@ -28,6 +28,10 @@ public:
     const InvertedIndex& getIndex() const;
 
     size_t getTotalDocuments() const;
+
+    void saveIndex(const std::string& filename) const;
+
+    void loadIndex(const std::string& filename);
 };
 
 #endif
