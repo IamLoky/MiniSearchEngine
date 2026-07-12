@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cmath>
+#include <stdexcept>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -259,4 +260,14 @@ SearchEngine::searchPhrase(const string& phrase)
          });
 
     return results;
+}
+
+void SearchEngine::saveIndex(const string& filename) const
+{
+
+}
+
+void SearchEngine::loadIndex(const string& filename)
+{
+
 }
