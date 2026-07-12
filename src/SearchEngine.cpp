@@ -140,7 +140,7 @@ SearchEngine::search(const string& query)
 
                 double idf =
                     log(
-                        static_cast<double>(total Documents + 1) / (df + 1)
+                        static_cast<double>(totalDocuments + 1) / (df + 1)
                     );
 
                 double tf =
