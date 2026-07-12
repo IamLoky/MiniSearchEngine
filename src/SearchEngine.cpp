@@ -304,6 +304,44 @@ void SearchEngine::saveIndex(const string& filename) const
     out.write(
         reinterpret_cast<char*>(&totalWords),
         sizeof(totalWords));
+
+    for(const auto& wordEntry : index)
+  {
+    // Write the word
+      writeString(out, wordEntry.first);
+
+      size_t postingCount = wordEntry.second.size();
+
+      out.write(
+          reinterpret_cast<const char*>(&postingCount),
+          sizeof(postingCount));
+
+    // Write each posting
+      for(const auto& postingEntry : wordEntry.second)
+      {
+          writeString(out, postingEntry.first);
+
+          const Posting& posting = postingEntry.second;
+
+          out.write(
+              reinterpret_cast<const char*>(&posting.frequency),
+              sizeof(posting.frequency));
+
+          size_t positionCount =
+              posting.positions.size();
+
+          out.write(
+              reinterpret_cast<const char*>(&positionCount),
+              sizeof(positionCount));
+
+          for(int position : posting.positions)
+          {
+              out.write(
+                  reinterpret_cast<const char*>(&position),
+                  sizeof(position));
+          }
+      }
+  }
 }
 
 void SearchEngine::loadIndex(const string& filename)
