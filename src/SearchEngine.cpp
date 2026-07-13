@@ -393,4 +393,53 @@ void SearchEngine::loadIndex(const string& filename)
     in.read(
         reinterpret_cast<char*>(&totalDocuments),
         sizeof(totalDocuments));
+
+    size_t totalWords;
+
+    in.read(
+        reinterpret_cast<char*>(&totalWords),
+        sizeof(totalWords));
+
+    for(size_t i = 0; i < totalWords; i++)
+    {
+        string word = readString(in);
+
+        size_t postingCount;
+
+        in.read(
+            reinterpret_cast<char*>(&postingCount),
+            sizeof(postingCount));
+
+        PostingList postingList;
+
+        for(size_t j = 0; j < postingCount; j++)
+        {
+            string fileName = readString(in);
+
+            Posting posting;
+
+            in.read(
+                reinterpret_cast<char*>(&posting.frequency),
+                sizeof(posting.frequency));
+
+            size_t positionCount;
+
+            in.read(
+                reinterpret_cast<char*>(&positionCount),
+                sizeof(positionCount));
+
+            posting.positions.resize(positionCount);
+
+            for(size_t k = 0; k < positionCount; k++)
+            {
+                in.read(
+                    reinterpret_cast<char*>(&posting.positions[k]),
+                    sizeof(int));
+            }
+
+            postingList[fileName] = posting;
+        }
+
+        index[word] = std::move(postingList);
+    }
 }
