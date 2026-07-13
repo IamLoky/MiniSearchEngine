@@ -8,7 +8,7 @@ int main()
 {
   SearchEngine engine;
 
-  engine.buildIndex("docs");
+  engine.loadIndex("index.bin");
 
   engine.saveIndex("index.bin");
 
