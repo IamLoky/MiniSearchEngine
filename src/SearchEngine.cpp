@@ -370,4 +370,27 @@ void SearchEngine::loadIndex(const string& filename)
     }
 
     index.clear();
+
+    string magic = readString(in);
+
+    if(magic != "MSE1")
+    {
+        throw runtime_error("Invalid index file.");
+    }
+
+    int version;
+
+    in.read(
+        reinterpret_cast<char*>(&version),
+        sizeof(version));
+
+    if(version != 1)
+    {
+        throw runtime_error(
+            "Unsupported index version.");
+    }
+
+    in.read(
+        reinterpret_cast<char*>(&totalDocuments),
+        sizeof(totalDocuments));
 }
