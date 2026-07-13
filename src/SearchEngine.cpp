@@ -301,13 +301,13 @@ void SearchEngine::saveIndex(const string& filename) const
 
     constexpr char MAGIC[] = "MSE1";
 
-    writeString(out, magic);
+    writeString(out, MAGIC);
 
     constexpr int INDEX_VERSION = 1;
 
     out.write(
-        reinterpret_cast<char*>(&version),
-        sizeof(version));
+        reinterpret_cast<const char*>(&INDEX_VERSION),
+        sizeof(INDEX_VERSION));
 
     out.write(
         reinterpret_cast<const char*>(
