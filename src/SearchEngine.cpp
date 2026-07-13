@@ -23,6 +23,21 @@ static void writeString(std::ofstream& out,
     out.write(str.data(), length);
 }
 
+static std::string readString(std::ifstream& in)
+{
+    size_t length;
+
+    in.read(
+        reinterpret_cast<char*>(&length),
+        sizeof(length));
+
+    std::string str(length, '\0');
+
+    in.read(&str[0], length);
+
+    return str;
+}
+
 void SearchEngine::buildIndex(const string& folderPath)
 {
     for(const auto& entry : fs::directory_iterator(folderPath))
@@ -346,5 +361,13 @@ void SearchEngine::saveIndex(const string& filename) const
 
 void SearchEngine::loadIndex(const string& filename)
 {
+    ifstream in(filename, ios::binary);
 
+    if(!in)
+    {
+        throw runtime_error(
+            "Could not open index file.");
+    }
+
+    index.clear();
 }
