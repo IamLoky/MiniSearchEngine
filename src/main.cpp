@@ -6,31 +6,27 @@ using namespace std;
 
 int main()
 {
-  SearchEngine engine;
+    SearchEngine engine;
 
-  engine.loadIndex("index.bin");
+    engine.loadIndex("index.bin");
 
-  engine.saveIndex("index.bin");
+    string query;
 
-  cout << "Index saved successfully.\n";
+    cout << "Enter search query: ";
+    getline(cin, query);
 
-  string query;
+    auto results = engine.search(query);
 
-  cout << "Enter search query: ";
-  getline(cin, query);
+    cout << "Search Results:\n";
 
-  auto results = engine.search(query);
+    for(const auto& result : results)
+    {
+        cout
+            << result.documentName
+            << " ("
+            << result.score
+            << ")\n";
+    }
 
-  cout << "Search Results:\n";
-
-  for(const auto& result : results)
-  {
-    cout
-        << result.documentName
-        << " ("
-        << result.score
-        << ")\n";
-  }
-
-  return 0;
+    return 0;
 }
