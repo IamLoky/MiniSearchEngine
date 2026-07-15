@@ -217,4 +217,4 @@ This project strengthened my understanding of:
 
 ### Phrase Search
 
-![Phrase Search](docs/screenshots/phrase_search.png)
+![Phrase Search](docs/screenshots/Screenshot 2026-07-15 131455.png)
