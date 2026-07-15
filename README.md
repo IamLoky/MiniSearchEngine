@@ -208,3 +208,13 @@ This project strengthened my understanding of:
 * C++17 programming
 * Algorithm analysis and optimization
 * Modular software development
+  
+## Screenshots
+
+### Single-word Search
+
+![Single Word Search](docs/screenshots/single_search.png)
+
+### Phrase Search
+
+![Phrase Search](docs/screenshots/phrase_search.png)
