@@ -213,8 +213,8 @@ This project strengthened my understanding of:
 
 ### Single-word Search
 
-![Single Word Search](docs/screenshots/Screenshot 2026-07-15 131342.png)
+![Single Word Search](docs/screenshots/single_search.png)
 
 ### Phrase Search
 
-![Phrase Search](docs/screenshots/Screenshot 2026-07-15 131455.png)
+![Phrase Search](docs/screenshots/phrase_search.png)
